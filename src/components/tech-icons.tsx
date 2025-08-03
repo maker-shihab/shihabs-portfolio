@@ -1,13 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import { cn } from "@/lib/utils";
 import {
-  Css3,
+  Code,
   Database,
   Figma,
   GitBranch,
   Globe,
-  Javascript,
   Smartphone,
   Sparkles,
   Terminal,
@@ -23,10 +23,10 @@ interface TechIconsProps {
 }
 
 const technologies = [
-  { name: "HTML5", icon: HtmlIcon, color: "text-orange-500" },
-  { name: "CSS3", icon: Css3, color: "text-blue-500" },
-  { name: "JavaScript", icon: Javascript, color: "text-yellow-500" },
-  { name: "React", icon: ReactIcon, color: "text-cyan-400" },
+  { name: "HTML5", icon: Globe, color: "text-orange-500" },
+  { name: "CSS3", icon: Code, color: "text-blue-500" },
+  { name: "JavaScript", icon: Terminal, color: "text-yellow-500" },
+  { name: "React", icon: Sparkles, color: "text-cyan-400" },
   { name: "Next.js", icon: Globe, color: "text-white" },
   { name: "TypeScript", icon: Terminal, color: "text-blue-600" },
   { name: "Tailwind CSS", icon: Sparkles, color: "text-teal-400" },

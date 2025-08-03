@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { Codepen, Figma, Github, Linkedin, Mail, Twitter } from "lucide-react";
+import { Code, CodeXml, Github, Linkedin, Mail, Twitter } from "lucide-react";
 import Link from "next/link";
 
 interface SocialIconsProps {
@@ -38,13 +38,13 @@ const socialLinks = [
   {
     name: "Figma",
     href: "#",
-    icon: Figma,
+    icon: CodeXml,
     color: "hover:text-purple-500",
   },
   {
     name: "CodePen",
     href: "#",
-    icon: Codepen,
+    icon: Code,
     color: "hover:text-gray-900 dark:hover:text-white",
   },
 ];

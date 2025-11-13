@@ -1,51 +1,36 @@
-# ProMe Portfolio
-
-Welcome to my ProMe Portfolio repository! This portfolio showcases a collection of projects and coding exercises I've worked on as part of my learning journey. It's a testament to my growth as a web developer and my dedication to honing my skills.
-
-## Technologies Used
-
-- HTML
-- CSS
-- JavaScript
-- jQuery
-- Bootstrap
-
-## Live Demo
-
-Explore my ProMe Portfolio live at: [https://maker-shihab.github.io/pro-me/](https://maker-shihab.github.io/pro-me/)
-
-## Contents
-
-- Each project is organized into separate folders, each containing its own README file with detailed information.
-- The portfolio features various web applications, coding challenges, and experiments that demonstrate my proficiency in frontend development.
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
 
-1. Clone this repository to your local machine.
-2. Navigate to the specific project's folder that you're interested in.
-3. Open the `index.html` file in your web browser to view the project.
+First, run the development server:
 
-## Projects
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-Here's a glimpse of some of the projects included in this portfolio:
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-1. Project Name 1
-   - Description: Brief overview of the project.
-   - Folder: `project-name-1/`
-   - Live Demo: [Link](https://example.com/project-name-1)
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-2. Project Name 2
-   - Description: Brief overview of the project.
-   - Folder: `project-name-2/`
-   - Live Demo: [Link](https://example.com/project-name-2)
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Contributions
+## Learn More
 
-This portfolio is a representation of my personal journey and the progress I've made. While I'm not currently accepting contributions, feel free to explore the projects, learn from the code, and use them as inspiration for your own projects.
+To learn more about Next.js, take a look at the following resources:
 
-## Contact
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-If you have any questions, feedback, or just want to connect, feel free to reach out to me at [frontendmaker99@gmail.com](frontendmaker99@gmail.com).
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-Thank you for visiting my ProMe Portfolio repository!
+## Deploy on Vercel
 
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

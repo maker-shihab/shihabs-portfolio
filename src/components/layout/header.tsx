@@ -2,6 +2,7 @@
 "use client";
 
 import { ThemeToggle } from "@/components/layout/theme-toggle";
+import { LogoConcept1 } from "@/components/logo/LogoConcept1";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
@@ -36,20 +37,7 @@ export function Header() {
     >
       <div className="container flex h-16 items-center justify-between">
         {/* Logo */}
-        <Link
-          href="/"
-          className="flex items-center space-x-2 group"
-          onClick={() => setIsMobileOpen(false)}
-        >
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-linear-to-br from-primary to-primary/60 group-hover:from-primary/80 group-hover:to-primary/40 transition-all duration-300">
-            <span className="text-primary-foreground font-bold text-sm">
-              MS
-            </span>
-          </div>
-          <span className="font-bold text-xl bg-linear-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
-            Maker Shihab
-          </span>
-        </Link>
+        <LogoConcept1 setIsMobileOpen={setIsMobileOpen} />
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-8">

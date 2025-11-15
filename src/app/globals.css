@@ -1,50 +1,49 @@
-@import url('https://cdnjs.cloudflare.com/ajax/libs/firacode/6.2.0/fira_code.css');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    /* VS Code Light Theme Inspired */
+    /* Light Theme - Matching your 404 page gradient colors */
     --background: 0 0% 100%;
-    --foreground: 225 6% 13%;
+    --foreground: 222 47% 11%;
 
     --card: 0 0% 100%;
-    --card-foreground: 225 6% 13%;
+    --card-foreground: 222 47% 11%;
     --popover: 0 0% 100%;
-    --popover-foreground: 225 6% 13%;
+    --popover-foreground: 222 47% 11%;
 
-    /* Primary - VS Code Blue */
-    --primary: 207 90% 54%;
+    /* Primary - From your gradient (red-500) */
+    --primary: 0 84% 60%;
     --primary-foreground: 0 0% 100%;
 
-    /* Secondary - Light Gray */
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 225 6% 13%;
+    /* Secondary - From your gradient (purple-500) */
+    --secondary: 267 100% 58%;
+    --secondary-foreground: 0 0% 100%;
+
+    /* Accent - From your gradient (blue-500) */
+    --accent: 207 90% 54%;
+    --accent-foreground: 0 0% 100%;
 
     /* Muted Colors */
     --muted: 220 14% 96%;
     --muted-foreground: 220 8% 46%;
 
-    /* Accent - VS Code Purple for functions */
-    --accent: 267 100% 58%;
-    --accent-foreground: 0 0% 100%;
-
-    /* Destructive - VS Code Red for errors */
+    /* Destructive */
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
     /* Borders & Inputs */
     --border: 220 13% 91%;
     --input: 220 13% 91%;
-    --ring: 207 90% 54%;
+    --ring: 0 84% 60%;
 
     /* Radius */
-    --radius: 0.5rem;
+    --radius: 0.75rem;
   }
 
   .dark {
-    /* VS Code Dark Theme Inspired */
+    /* Dark Theme - Enhanced version of your 404 dark theme */
     --background: 225 6% 13%;
     --foreground: 210 40% 98%;
 
@@ -53,30 +52,30 @@
     --popover: 225 9% 15%;
     --popover-foreground: 210 40% 98%;
 
-    /* Primary - VS Code Blue */
-    --primary: 207 90% 61%;
+    /* Primary - Brighter red for dark mode */
+    --primary: 0 84% 65%;
     --primary-foreground: 0 0% 100%;
 
-    /* Secondary */
-    --secondary: 217 33% 17%;
-    --secondary-foreground: 210 40% 98%;
+    /* Secondary - Brighter purple for dark mode */
+    --secondary: 267 100% 65%;
+    --secondary-foreground: 0 0% 100%;
+
+    /* Accent - Brighter blue for dark mode */
+    --accent: 207 90% 61%;
+    --accent-foreground: 0 0% 100%;
 
     /* Muted Colors */
     --muted: 217 33% 17%;
     --muted-foreground: 215 20% 65%;
 
-    /* Accent - VS Code Purple */
-    --accent: 267 100% 65%;
-    --accent-foreground: 0 0% 100%;
-
     /* Destructive */
     --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 98%;
 
     /* Borders & Inputs */
     --border: 217 33% 17%;
     --input: 217 33% 17%;
-    --ring: 207 90% 61%;
+    --ring: 0 84% 65%;
   }
 }
 
@@ -87,139 +86,104 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Fira Code', 'Cascadia Code', 'SF Mono', Monaco, 'Consolas', 'Ubuntu Mono', monospace;
+    font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    font-feature-settings: 'calt' 1, 'ss01' 1, 'ss02' 1;
+    line-height: 1.6;
   }
 
-  /* Code-like font for all text */
+  /* Classic, stylish fonts for headings */
   h1,
   h2,
   h3,
   h4,
   h5,
   h6 {
-    font-family: 'Fira Code', 'Cascadia Code', 'SF Mono', Monaco, 'Consolas', 'Ubuntu Mono', monospace;
+    font-family: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
     font-weight: 600;
+    line-height: 1.2;
     letter-spacing: -0.025em;
-  }
-
-  /* VS Code-like selection */
-  ::selection {
-    @apply bg-primary/30 text-foreground;
-  }
-
-  ::-moz-selection {
-    @apply bg-primary/30 text-foreground;
   }
 }
 
 @layer components {
 
-  /* IDE-like container */
-  .ide-container {
-    @apply bg-background border border-border rounded-lg shadow-sm;
+  /* Gradient text utility matching your 404 page */
+  .gradient-text {
+    background: linear-gradient(135deg, hsl(0, 84%, 60%), hsl(267, 100%, 58%), hsl(207, 90%, 54%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
-  /* Code-like button */
-  .code-button {
-    @apply bg-secondary hover:bg-secondary/80 text-foreground font-medium px-4 py-2 rounded border border-border transition-colors duration-200;
+  /* Gradient background utility */
+  .gradient-bg {
+    background: linear-gradient(135deg, hsl(0, 84%, 60%), hsl(267, 100%, 58%), hsl(207, 90%, 54%));
   }
 
-  /* VS Code-like card */
-  .vscode-card {
-    @apply bg-card border border-border rounded p-4 font-mono text-sm;
+  /* Subtle gradient backgrounds */
+  .subtle-gradient {
+    background: linear-gradient(135deg, hsl(0, 0%, 100%), hsl(220, 14%, 96%));
+  }
+
+  .dark .subtle-gradient {
+    background: linear-gradient(135deg, hsl(225, 6%, 13%), hsl(225, 9%, 15%));
+  }
+
+  /* Button with your gradient */
+  .btn-gradient {
+    @apply bg-gradient-to-r from-red-500 via-purple-500 to-blue-500 text-white font-medium px-6 py-3 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200;
+  }
+
+  /* Card with gradient border effect */
+  .gradient-card {
+    @apply bg-card border border-border rounded-xl p-6 relative overflow-hidden;
+  }
+
+  .gradient-card::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-red-500 via-purple-500 to-blue-500 opacity-0 transition-opacity duration-300;
+  }
+
+  .gradient-card:hover::before {
+    @apply opacity-5;
   }
 }
 
 @layer utilities {
 
-  /* Custom scrollbar like VS Code */
+  /* Custom scrollbar */
   ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+    width: 8px;
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-background;
+    @apply bg-muted;
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-border rounded hover:bg-muted-foreground/30;
+    background: linear-gradient(to bottom, hsl(0, 84%, 60%), hsl(267, 100%, 58%));
+    @apply rounded-full;
   }
 
-  /* Font ligatures for coding fonts */
-  .ligatures {
-    font-feature-settings: 'calt' 1, 'ss01' 1, 'ss02' 1, 'zero' 1, 'onum' 1;
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, hsl(0, 84%, 65%), hsl(267, 100%, 65%));
   }
 
-  /* VS Code-like focus ring */
-  .vscode-focus:focus-visible {
-    @apply outline-2 outline-primary outline-offset-2;
-  }
-}
-
-/* Animations */
-@keyframes blink {
-
-  0%,
-  100% {
-    opacity: 1;
+  /* Selection styles */
+  ::selection {
+    background: linear-gradient(135deg, hsl(0, 84%, 60%), hsl(267, 100%, 58%));
+    @apply text-white;
   }
 
-  50% {
-    opacity: 0;
+  ::-moz-selection {
+    background: linear-gradient(135deg, hsl(0, 84%, 60%), hsl(267, 100%, 58%));
+    @apply text-white;
   }
 }
 
-@keyframes typewriter {
-  from {
-    width: 0;
-  }
-
-  to {
-    width: 100%;
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-blink {
-  animation: blink 1s infinite;
-}
-
-.animate-typewriter {
-  animation: typewriter 2s steps(40) 1s both;
-}
-
-.animate-fadeIn {
-  animation: fadeIn 0.3s ease-out;
-}
-
-/* Terminal styles */
-.terminal {
-  @apply bg-[#1e1e1e] text-[#cccccc] font-mono text-sm p-4 rounded-lg;
-  font-family: 'Fira Code', 'Cascadia Code', 'SF Mono', Monaco, 'Consolas', 'Ubuntu Mono', monospace;
-}
-
-.terminal-line::before {
-  content: '> ';
-  @apply text-green-400;
-}
-
-/* Keep your original blob animation */
+/* Animations - Keeping your original animations */
 @keyframes blob {
   0% {
     transform: translate(0px, 0px) scale(1);
@@ -238,8 +202,40 @@
   }
 }
 
+@keyframes blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .animate-blob {
   animation: blob 7s infinite;
+}
+
+.animate-blink {
+  animation: blink 1s infinite;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
 }
 
 .animation-delay-2000 {
@@ -248,4 +244,12 @@
 
 .animation-delay-4000 {
   animation-delay: 4000ms;
+}
+
+/* Focus styles */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  @apply outline-2 outline-offset-2 outline-ring;
 }

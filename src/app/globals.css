@@ -253,3 +253,80 @@ input:focus-visible,
 textarea:focus-visible {
   @apply outline-2 outline-offset-2 outline-ring;
 }
+
+/* Swiper Custom Styles for Testimonials */
+.testimonials-swiper {
+  padding-bottom: 3rem !important;
+}
+
+/* Hide default Swiper navigation arrows */
+.testimonials-swiper .swiper-button-next,
+.testimonials-swiper .swiper-button-prev {
+  display: none !important;
+}
+
+.testimonials-swiper .swiper-pagination {
+  position: relative;
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.testimonials-swiper .swiper-pagination-bullet {
+  width: 12px;
+  height: 12px;
+  background: hsl(var(--muted-foreground));
+  opacity: 0.3;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 50%;
+}
+
+.testimonials-swiper .swiper-pagination-bullet-active {
+  background: linear-gradient(135deg,
+      hsl(0, 84%, 60%),
+      hsl(267, 100%, 58%),
+      hsl(207, 90%, 54%));
+  opacity: 1;
+  width: 32px;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+}
+
+.testimonials-swiper .swiper-slide {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  height: auto;
+  opacity: 0.85;
+}
+
+.testimonials-swiper .swiper-slide-active {
+  opacity: 1;
+  transform: scale(1.02);
+  z-index: 10;
+}
+
+/* Custom Scrollbar for Project Highlights */
+.project-highlights-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.project-highlights-scroll::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+  border-radius: 3px;
+}
+
+.project-highlights-scroll::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg,
+      hsl(0, 84%, 60%),
+      hsl(267, 100%, 58%),
+      hsl(207, 90%, 54%));
+  border-radius: 3px;
+}
+
+.project-highlights-scroll::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg,
+      hsl(0, 84%, 65%),
+      hsl(267, 100%, 63%),
+      hsl(207, 90%, 59%));
+}

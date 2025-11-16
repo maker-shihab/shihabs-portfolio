@@ -2,11 +2,10 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
 import type { Skill } from "@/data/portfolio-data";
-import { fadeIn, scaleIn } from "@/lib/animations";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import { Award, Calendar, Code2, FolderKanban, Terminal } from "lucide-react";
 
 interface SkillBadgeProps {
   skill: Skill;
@@ -21,130 +20,178 @@ export function SkillBadge({
   className,
   index = 0,
   showProgress = true,
-  variant = "default",
 }: SkillBadgeProps) {
-  const getVariantStyles = () => {
-    switch (variant) {
-      case "compact":
-        return "p-3 hover:scale-105";
-      case "featured":
-        return "p-6 border-2 border-primary/20 hover:border-primary/40 bg-gradient-to-br from-card to-card/50";
-      default:
-        return "p-4 hover:scale-105";
-    }
-  };
-
   const getSkillLevelColor = (level: number) => {
-    if (level >= 90) return "bg-green-500";
-    if (level >= 80) return "bg-blue-500";
-    if (level >= 70) return "bg-yellow-500";
-    return "bg-gray-500";
+    // Muted, less bright colors
+    if (level >= 90) return "bg-green-500/40";
+    if (level >= 80) return "bg-blue-500/40";
+    if (level >= 70) return "bg-yellow-500/40";
+    return "bg-gray-500/40";
   };
 
-  const getSkillLevelText = (level: number) => {
-    if (level >= 90) return "Expert";
-    if (level >= 80) return "Advanced";
-    if (level >= 70) return "Intermediate";
-    return "Beginner";
+  const getExpertiseBadge = (level: number) => {
+    if (level >= 95)
+      return {
+        text: "Master",
+        variant: "default" as const,
+        className:
+          "bg-gradient-to-r from-green-500/20 to-emerald-600/20 text-green-600 border-green-500/30",
+      };
+    if (level >= 90)
+      return {
+        text: "Expert",
+        variant: "default" as const,
+        className:
+          "bg-gradient-to-r from-blue-500/20 to-cyan-600/20 text-blue-600 border-blue-500/30",
+      };
+    if (level >= 80)
+      return {
+        text: "Advanced",
+        variant: "secondary" as const,
+        className: "bg-primary/10 text-primary border-primary/20",
+      };
+    if (level >= 70)
+      return {
+        text: "Proficient",
+        variant: "secondary" as const,
+        className: "bg-yellow-500/10 text-yellow-600 border-yellow-500/20",
+      };
+    return {
+      text: "Learning",
+      variant: "outline" as const,
+      className: "bg-muted/50 text-muted-foreground border-border/50",
+    };
   };
+
+  const expertiseBadge = getExpertiseBadge(skill.level);
 
   return (
     <motion.div
-      variants={fadeIn}
-      initial="initial"
-      whileInView="animate"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      whileHover="hover"
-      transition={{ delay: index * 0.1 }}
-      className={cn("group", className)}
+      transition={{
+        delay: index * 0.05,
+        type: "spring",
+        stiffness: 100,
+        damping: 15,
+      }}
+      className={cn("group relative", className)}
     >
-      <Card
-        className={cn(
-          "h-full transition-all duration-300 border-0 bg-card/50 backdrop-blur-sm hover:shadow-xl hover:bg-card/80",
-          getVariantStyles()
-        )}
-      >
-        <CardContent className="p-0 space-y-4">
-          {/* Header */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <motion.div variants={scaleIn} className="text-2xl">
-                {skill.icon}
-              </motion.div>
-              <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-foreground truncate">
-                  {skill.name}
-                </h3>
-                {variant !== "compact" && (
-                  <p className="text-xs text-muted-foreground">
-                    {skill.yearsOfExperience} year
-                    {skill.yearsOfExperience !== 1 ? "s" : ""} experience
-                  </p>
-                )}
-              </div>
-            </div>
+      <Card className="h-full overflow-hidden border border-border/50 bg-card/80 backdrop-blur-sm transition-all duration-300 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 group-hover:scale-[1.02] cursor-pointer flex flex-col relative">
+        {/* Subtle gradient glow on hover */}
+        <motion.div className="absolute inset-0 bg-gradient-to-br from-primary/0 to-primary/0 opacity-0 group-hover:opacity-5 transition-opacity duration-300 pointer-events-none" />
 
-            {variant !== "compact" && (
+        <CardContent className="p-5 flex-1 flex flex-col relative z-10">
+          {/* Terminal Header - Developer Friendly */}
+          <div className="flex items-center gap-2 mb-4 pb-3 border-b border-border/50">
+            <Terminal className="w-3.5 h-3.5 text-primary" />
+            <span className="text-xs font-mono text-muted-foreground">
+              {skill.id}.ts
+            </span>
+            {skill.level >= 90 && (
               <Badge
-                variant="secondary"
-                className={cn(
-                  "text-xs font-medium",
-                  skill.level >= 90 &&
-                    "bg-green-500/20 text-green-700 dark:text-green-300",
-                  skill.level >= 80 &&
-                    skill.level < 90 &&
-                    "bg-blue-500/20 text-blue-700 dark:text-blue-300",
-                  skill.level >= 70 &&
-                    skill.level < 80 &&
-                    "bg-yellow-500/20 text-yellow-700 dark:text-yellow-300"
-                )}
+                variant="outline"
+                className="ml-auto text-xs font-mono border-primary/30 text-primary bg-primary/5"
               >
-                {skill.level}%
+                <Award className="w-3 h-3 mr-1" />
+                Expert
               </Badge>
             )}
           </div>
 
-          {/* Progress Bar */}
-          {showProgress && variant !== "compact" && (
-            <div className="space-y-2">
-              <div className="flex items-center justify-between text-xs">
-                <span className="text-muted-foreground">
-                  {getSkillLevelText(skill.level)}
-                </span>
-                <span className="font-medium">{skill.level}%</span>
+          {/* Main Header - Icon, Name, Badges */}
+          <div className="flex items-start gap-3 mb-4">
+            <motion.div
+              whileHover={{ scale: 1.1, rotate: 5 }}
+              className="text-3xl flex-shrink-0 mt-0.5"
+            >
+              {skill.icon}
+            </motion.div>
+            <div className="flex-1 min-w-0">
+              <h3 className="font-bold text-xl leading-tight group-hover:text-primary transition-colors mb-2 font-mono">
+                {skill.name}
+              </h3>
+              <div className="flex flex-wrap items-center gap-2">
+                <Badge
+                  variant={expertiseBadge.variant}
+                  className={cn(
+                    "text-xs font-semibold font-mono",
+                    expertiseBadge.className
+                  )}
+                >
+                  {expertiseBadge.text}
+                </Badge>
               </div>
-              <Progress
-                value={skill.level}
-                className={cn(
-                  "h-2 transition-all duration-1000 ease-out",
-                  getSkillLevelColor(skill.level)
-                )}
-              />
+            </div>
+          </div>
+
+          {/* Description - Developer Friendly */}
+          <p className="text-sm text-foreground/80 leading-relaxed mb-4 line-clamp-2 min-h-[2.5rem]">
+            {skill.description}
+          </p>
+
+          {/* Progress Bar - Less Bright, No Animation */}
+          {showProgress && (
+            <div className="space-y-2 mb-4">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono text-muted-foreground uppercase tracking-wide">
+                  const proficiency =
+                </span>
+                <span className="text-sm font-bold text-foreground font-mono">
+                  {skill.level}%
+                </span>
+              </div>
+              <div className="relative h-2 bg-muted/50 rounded-full overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  whileInView={{ width: `${skill.level}%` }}
+                  viewport={{ once: true }}
+                  transition={{
+                    delay: index * 0.1 + 0.3,
+                    duration: 1.5,
+                    ease: "easeOut",
+                  }}
+                  className={cn(
+                    "h-full rounded-full",
+                    getSkillLevelColor(skill.level)
+                  )}
+                />
+              </div>
             </div>
           )}
 
-          {/* Description */}
-          {variant === "featured" && (
-            <motion.p
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              className="text-sm text-muted-foreground leading-relaxed"
-            >
-              {skill.description}
-            </motion.p>
-          )}
-
-          {/* Stats */}
-          {variant !== "compact" && (
-            <div className="flex items-center justify-between pt-2 border-t border-border/50">
-              <div className="text-xs text-muted-foreground">
-                {skill.projects} project{skill.projects !== 1 ? "s" : ""}
-              </div>
-              <Badge variant="outline" className="text-xs">
-                {skill.category}
+          {/* Stats with Badges - Developer Friendly */}
+          <div className="mt-auto pt-4 border-t border-border/50">
+            <div className="flex flex-wrap items-center gap-2 mb-3">
+              <Badge
+                variant="outline"
+                className="text-xs font-mono border-primary/30 text-primary bg-primary/5"
+              >
+                <Calendar className="w-3 h-3 mr-1.5" />
+                {skill.yearsOfExperience}+ years
+              </Badge>
+              <Badge
+                variant="outline"
+                className="text-xs font-mono border-primary/30 text-primary bg-primary/5"
+              >
+                <FolderKanban className="w-3 h-3 mr-1.5" />
+                {skill.projects}+ projects
               </Badge>
             </div>
-          )}
+            <div className="flex items-center justify-between">
+              <Badge
+                variant="outline"
+                className="text-xs font-mono capitalize border-border/50 bg-muted/30"
+              >
+                <Code2 className="w-3 h-3 mr-1.5" />
+                {skill.category}
+              </Badge>
+              <span className="text-xs font-mono text-muted-foreground">
+                {skill.level}%
+              </span>
+            </div>
+          </div>
         </CardContent>
       </Card>
     </motion.div>

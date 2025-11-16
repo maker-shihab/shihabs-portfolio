@@ -16,22 +16,21 @@ import {
   getProjectsByTechnology,
   sortProjects,
 } from "@/data/utils";
-import { fadeIn, staggerContainer } from "@/lib/animations";
+import { fadeIn } from "@/lib/animations";
 import { motion } from "framer-motion";
-import { Filter, Grid3X3, List, Search, X } from "lucide-react";
-import Link from "next/link";
+import { ChevronLeft, ChevronRight, Search, X } from "lucide-react";
 import { useMemo, useState } from "react";
 
-type ViewMode = "grid" | "list";
 type SortBy = "newest" | "oldest" | "name-asc" | "name-desc" | "featured";
 
-export function Projects() {
+const ITEMS_PER_PAGE = 9;
+
+export default function ProjectsPage() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedTechnology, setSelectedTechnology] = useState("all");
   const [sortBy, setSortBy] = useState<SortBy>("newest");
   const [searchQuery, setSearchQuery] = useState("");
-  const [viewMode, setViewMode] = useState<ViewMode>("grid");
-  const [showFilters, setShowFilters] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
 
   // Filter and sort projects
   const filteredProjects = useMemo(() => {
@@ -67,11 +66,23 @@ export function Projects() {
     return filtered;
   }, [selectedCategory, selectedTechnology, sortBy, searchQuery]);
 
+  // Pagination
+  const totalPages = Math.ceil(filteredProjects.length / ITEMS_PER_PAGE);
+
+  // Adjust current page if it exceeds total pages
+  const validCurrentPage =
+    currentPage > totalPages && totalPages > 0 ? 1 : currentPage;
+  const displayProjects = filteredProjects.slice(
+    (validCurrentPage - 1) * ITEMS_PER_PAGE,
+    validCurrentPage * ITEMS_PER_PAGE
+  );
+
   const clearFilters = () => {
     setSelectedCategory("all");
     setSelectedTechnology("all");
     setSearchQuery("");
     setSortBy("newest");
+    setCurrentPage(1);
   };
 
   const hasActiveFilters =
@@ -81,26 +92,34 @@ export function Projects() {
     sortBy !== "newest";
 
   return (
-    <section id="projects" className="py-20 lg:py-32 bg-background">
-      <div className="container">
+    <div className="min-h-screen py-20 lg:py-32 bg-background relative overflow-hidden">
+      {/* Animated Background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500/5 rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500/5 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
+      </div>
+
+      <div className="container relative z-10">
         {/* Header */}
         <motion.div
           variants={fadeIn}
           initial="initial"
           whileInView="animate"
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
-          <h2 className="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent mb-6">
-            Featured Projects
-          </h2>
+          <h1 className="text-4xl lg:text-5xl font-bold mb-6">
+            <span className="bg-gradient-to-r from-red-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
+              All Projects
+            </span>
+          </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Explore my portfolio of modern web applications, from e-commerce
-            platforms to dynamic web experiences.
+            Browse through my complete portfolio of web applications and
+            projects.
           </p>
         </motion.div>
 
-        {/* Filters Bar */}
+        {/* Filters */}
         <motion.div
           variants={fadeIn}
           initial="initial"
@@ -108,45 +127,7 @@ export function Projects() {
           viewport={{ once: true }}
           className="mb-12 space-y-4"
         >
-          {/* Mobile Filter Toggle */}
-          <div className="flex items-center justify-between lg:hidden">
-            <Button
-              variant="outline"
-              onClick={() => setShowFilters(!showFilters)}
-              className="flex items-center gap-2"
-            >
-              <Filter className="w-4 h-4" />
-              Filters
-              {hasActiveFilters && (
-                <span className="w-2 h-2 bg-primary rounded-full" />
-              )}
-            </Button>
-
-            <div className="flex items-center gap-2">
-              <Button
-                variant={viewMode === "grid" ? "default" : "outline"}
-                size="icon"
-                onClick={() => setViewMode("grid")}
-              >
-                <Grid3X3 className="w-4 h-4" />
-              </Button>
-              <Button
-                variant={viewMode === "list" ? "default" : "outline"}
-                size="icon"
-                onClick={() => setViewMode("list")}
-              >
-                <List className="w-4 h-4" />
-              </Button>
-            </div>
-          </div>
-
-          {/* Filters */}
-          <div
-            className={cn(
-              "space-y-4 lg:space-y-0 lg:flex lg:items-center lg:gap-4",
-              showFilters ? "block" : "hidden lg:flex"
-            )}
-          >
+          <div className="flex flex-col lg:flex-row items-stretch lg:items-center gap-4">
             {/* Search */}
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
@@ -161,7 +142,10 @@ export function Projects() {
             {/* Category Filter */}
             <Select
               value={selectedCategory}
-              onValueChange={setSelectedCategory}
+              onValueChange={(value) => {
+                setSelectedCategory(value);
+                setCurrentPage(1);
+              }}
             >
               <SelectTrigger className="w-full lg:w-48">
                 <SelectValue placeholder="Category" />
@@ -178,7 +162,10 @@ export function Projects() {
             {/* Technology Filter */}
             <Select
               value={selectedTechnology}
-              onValueChange={setSelectedTechnology}
+              onValueChange={(value) => {
+                setSelectedTechnology(value);
+                setCurrentPage(1);
+              }}
             >
               <SelectTrigger className="w-full lg:w-48">
                 <SelectValue placeholder="Technology" />
@@ -195,7 +182,10 @@ export function Projects() {
             {/* Sort */}
             <Select
               value={sortBy}
-              onValueChange={(value: SortBy) => setSortBy(value)}
+              onValueChange={(value: SortBy) => {
+                setSortBy(value);
+                setCurrentPage(1);
+              }}
             >
               <SelectTrigger className="w-full lg:w-48">
                 <SelectValue placeholder="Sort by" />
@@ -220,49 +210,25 @@ export function Projects() {
                 Clear
               </Button>
             )}
+          </div>
 
-            {/* View Toggle - Desktop */}
-            <div className="hidden lg:flex items-center gap-2 border rounded-lg p-1">
-              <Button
-                variant={viewMode === "grid" ? "default" : "ghost"}
-                size="icon"
-                onClick={() => setViewMode("grid")}
-                className="h-8 w-8"
-              >
-                <Grid3X3 className="w-4 h-4" />
-              </Button>
-              <Button
-                variant={viewMode === "list" ? "default" : "ghost"}
-                size="icon"
-                onClick={() => setViewMode("list")}
-                className="h-8 w-8"
-              >
-                <List className="w-4 h-4" />
-              </Button>
-            </div>
+          {/* Results Count */}
+          <div className="text-sm text-muted-foreground font-mono">
+            Showing {displayProjects.length} of {filteredProjects.length}{" "}
+            projects
           </div>
         </motion.div>
 
         {/* Projects Grid */}
         <motion.div
-          variants={staggerContainer}
+          variants={fadeIn}
           initial="initial"
           whileInView="animate"
           viewport={{ once: true }}
-          className={cn(
-            "grid gap-6",
-            viewMode === "grid"
-              ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-              : "grid-cols-1"
-          )}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"
         >
-          {filteredProjects.map((project, index) => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-              index={index}
-              className={viewMode === "list" ? "max-w-4xl mx-auto" : ""}
-            />
+          {displayProjects.map((project, index) => (
+            <ProjectCard key={project.id} project={project} index={index} />
           ))}
         </motion.div>
 
@@ -283,26 +249,75 @@ export function Projects() {
           </motion.div>
         )}
 
-        {/* View All Button */}
-        {filteredProjects.length > 0 && (
+        {/* Pagination */}
+        {totalPages > 1 && (
           <motion.div
             variants={fadeIn}
             initial="initial"
             whileInView="animate"
             viewport={{ once: true }}
-            className="text-center mt-12"
+            className="flex items-center justify-center gap-2"
           >
-            <Button variant="outline" size="lg" asChild>
-              <Link href="/projects">View All Projects</Link>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
+              disabled={validCurrentPage === 1}
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </Button>
+
+            {/* Page Numbers */}
+            <div className="flex items-center gap-1">
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                (page) => {
+                  if (
+                    page === 1 ||
+                    page === totalPages ||
+                    (page >= validCurrentPage - 1 &&
+                      page <= validCurrentPage + 1)
+                  ) {
+                    return (
+                      <Button
+                        key={page}
+                        variant={
+                          validCurrentPage === page ? "default" : "outline"
+                        }
+                        size="sm"
+                        onClick={() => setCurrentPage(page)}
+                        className="min-w-[40px]"
+                      >
+                        {page}
+                      </Button>
+                    );
+                  } else if (
+                    page === validCurrentPage - 2 ||
+                    page === validCurrentPage + 2
+                  ) {
+                    return (
+                      <span key={page} className="px-2 text-muted-foreground">
+                        ...
+                      </span>
+                    );
+                  }
+                  return null;
+                }
+              )}
+            </div>
+
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() =>
+                setCurrentPage((prev) => Math.min(totalPages, prev + 1))
+              }
+              disabled={validCurrentPage === totalPages}
+            >
+              <ChevronRight className="w-4 h-4" />
             </Button>
           </motion.div>
         )}
       </div>
-    </section>
+    </div>
   );
-}
-
-// Add missing cn import helper
-function cn(...classes: (string | undefined | null | false)[]) {
-  return classes.filter(Boolean).join(" ");
 }

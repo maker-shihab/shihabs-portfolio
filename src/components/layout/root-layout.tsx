@@ -2,9 +2,9 @@
 
 import { ReactNode } from "react";
 import { Toaster } from "sonner";
+import { Footer } from "../shared/footer";
+import { Header } from "../shared/header";
 import { Analytics } from "./analytics";
-import { Footer } from "./footer";
-import { Header } from "./header";
 import { ThemeProvider } from "./theme-provider";
 
 interface RootLayoutProps {

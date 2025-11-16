@@ -24,15 +24,15 @@ export const siteConfig = {
     },
     {
       title: "Skills",
-      href: "/skills",
+      href: "/#skills",
     },
     {
       title: "Experience",
-      href: "/experience",
+      href: "/#experience",
     },
     {
       title: "Contact",
-      href: "/contact",
+      href: "/#contact",
     },
   ],
 } as const;

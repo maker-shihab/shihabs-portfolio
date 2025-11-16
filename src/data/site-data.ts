@@ -109,9 +109,9 @@ export const footerNav = {
 };
 
 export const contactInfo = {
-  email: "frontendmaker99@gmail.com",
+  email: "shihabud696@gmail.com",
   phone: "+88 01722 563073",
-  location: "Shibganj, Thakurgaon, Rangpur, Bangladesh 5102",
+  location: "Nurjahan Road, Mohammodpur, Dhaka, Bangladesh",
   social: {
     github: "https://github.com/maker-shihab",
     linkedin: "https://linkedin.com/in/maker-shihab",

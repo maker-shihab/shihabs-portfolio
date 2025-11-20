@@ -1,5 +1,6 @@
 import { RootLayout } from "@/components/layout/root-layout";
 import { siteConfig } from "@/data/site-data";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
@@ -135,6 +136,7 @@ export default function Layout({
           })}
         </Script>
         <RootLayout>{children}</RootLayout>
+        <SpeedInsights />
       </body>
     </html>
   );
